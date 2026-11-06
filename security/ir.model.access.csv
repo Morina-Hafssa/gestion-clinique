@@ -1,5 +1,1 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_patient_user,patient.user,model_gestion_clinique_patient,group_gestion_clinique_user,1,1,1,0
-access_doctor_user,doctor.user,model_gestion_clinique_doctor,group_gestion_clinique_user,1,1,1,0
-access_appointment_user,appointment.user,model_gestion_clinique_appointment,group_gestion_clinique_user,1,1,1,0
-access_consultation_user,consultation.user,model_gestion_clinique_consultation,group_gestion_clinique_user,1,1,1,0
