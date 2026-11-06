@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_gestion_clinique_root"
+    <menuitem id="menu_clinic_root"
               name="Clinic"
               sequence="50"
-              web_icon="gestion_clinique,static/description/icon.png"/>
+              groups="group_clinic_manager,group_clinic_reception,group_clinic_clinician,group_clinic_cashier"/>
 </odoo>

@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="group_gestion_clinique_user" model="res.groups">
-        <field name="name">Clinic / User</field>
-    </record>
-    <record id="group_gestion_clinique_manager" model="res.groups">
+
+    <!-- ============ MANAGER ============ -->
+    <record id="group_clinic_manager" model="res.groups">
         <field name="name">Clinic / Manager</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Full access to all clinic records, finance, and reports.</field>
     </record>
+
+    <!-- ============ RECEPTION ============ -->
+    <record id="group_clinic_reception" model="res.groups">
+        <field name="name">Clinic / Reception</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Patient identification, contact info, appointment booking. No clinical notes.</field>
+    </record>
+
+    <!-- ============ CLINICIAN ============ -->
+    <record id="group_clinic_clinician" model="res.groups">
+        <field name="name">Clinic / Clinician</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Clinical notes, diagnoses, prescriptions, test orders and results.</field>
+    </record>
+
+    <!-- ============ CASHIER ============ -->
+    <record id="group_clinic_cashier" model="res.groups">
+        <field name="name">Clinic / Cashier</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Billing, invoices, payments, receipts. No clinical access.</field>
+    </record>
+
+    <!-- ============ MANAGER IMPLIES EVERYTHING ============ -->
+    <record id="group_clinic_manager" model="res.groups">
+        <field name="implied_ids" eval="[
+            (4, ref('group_clinic_reception')),
+            (4, ref('group_clinic_clinician')),
+            (4, ref('group_clinic_cashier')),
+        ]"/>
+    </record>
+
 </odoo>

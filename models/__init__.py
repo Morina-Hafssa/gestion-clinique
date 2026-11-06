@@ -1,4 +1,1 @@
-from . import patient
-from . import doctor
-from . import appointment
-from . import consultation
+# Empty for now — each feature branch imports its own model files
