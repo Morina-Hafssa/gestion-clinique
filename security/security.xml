@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_gestion_clinique_user" model="res.groups">
+        <field name="name">Clinic / User</field>
+    </record>
+    <record id="group_gestion_clinique_manager" model="res.groups">
+        <field name="name">Clinic / Manager</field>
+    </record>
+</odoo>

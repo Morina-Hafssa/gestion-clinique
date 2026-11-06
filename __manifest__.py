@@ -1,0 +1,20 @@
+{
+    'name': 'Gestion Clinique',
+    'version': '18.0.1.0.0',
+    'category': 'Healthcare',
+    'summary': 'Clinic management: patients, doctors, appointments, consultations',
+    'author': 'Your Team',
+    'website': '',
+    'license': 'LGPL-3',
+    'depends': ['base'],
+    'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'views/menu.xml',
+        'views/patient_views.xml',
+        'views/doctor_views.xml',
+        'views/appointment_views.xml',
+    ],
+    'installable': True,
+    'application': True,
+}
