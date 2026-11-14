@@ -12,7 +12,9 @@
         'security/ir.model.access.csv',
         'views/menu.xml',
         'security/ir.model.access-doctor.csv',
-        'views/clinic_doctor_views.xml'
+        'views/clinic_doctor_views.xml',
+        'security/ir.model.access-nurse.csv',
+        'views/clinic_nurse_views.xml',
     ],
     'installable': True,
     'application': True,

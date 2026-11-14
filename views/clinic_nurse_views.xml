@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_clinic_nurse_list" model="ir.ui.view">
+        <field name="name">clinic.nurse.list</field>
+        <field name="model">clinic.nurse</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="service"/>
+                <field name="phone"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_clinic_nurse_form" model="ir.ui.view">
+        <field name="name">clinic.nurse.form</field>
+        <field name="model">clinic.nurse</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="service"/>
+                            <field name="license_number"/>
+                        </group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="user_id"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <field name="notes" placeholder="Notes administratives..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_clinic_nurse" model="ir.actions.act_window">
+        <field name="name">Infirmiers</field>
+        <field name="res_model">clinic.nurse</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_clinic_nurse"
+              name="Infirmiers"
+              parent="menu_clinic_root"
+              action="action_clinic_nurse"
+              groups="group_clinic_reception,group_clinic_clinician"
+              sequence="30"/>
+
+</odoo>
