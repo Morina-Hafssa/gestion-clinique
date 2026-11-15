@@ -1,1 +1,2 @@
-# Empty for now — each feature branch imports its own model files
+from . import clinic_doctor
+from . import clinic_nurse
