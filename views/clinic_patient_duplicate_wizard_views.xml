@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_clinic_patient_duplicate_wizard_form" model="ir.ui.view">
+        <field name="name">clinic.patient.duplicate.wizard.form</field>
+        <field name="model">clinic.patient.duplicate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Recherche anti-doublon">
+                <div class="alert alert-info">
+                    Saisissez les informations connues pour rechercher un patient existant avant création.
+                </div>
+                <group>
+                    <field name="name" placeholder="Nom complet..."/>
+                    <field name="birthdate"/>
+                    <field name="phone" widget="phone"/>
+                </group>
+                <group string="Doublons potentiels">
+                    <field name="results" nolabel="1" readonly="1"/>
+                    <field name="matched_patient_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+                <footer>
+                    <button name="action_open_existing" type="object"
+                            string="Ouvrir le dossier existant" class="btn-primary"
+                            invisible="not matched_patient_ids"/>
+                    <button name="action_create_new" type="object"
+                            string="Créer un nouveau dossier" class="btn-secondary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

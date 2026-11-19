@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ❌ Removed: rule_patient_reception with active in [True,False] — meaningless -->
+    <!-- ❌ Removed: all redundant per-role rules — ACL already covers it -->
+    <!-- ✅ Only ADD a real rule when you need row-level restriction -->
+    <!-- Example (future): patient visible only to users of same clinic -->
+    <!--
+    <record id="rule_patient_multi_clinic" model="ir.rule">
+        <field name="name">Patients : même clinique</field>
+        <field name="model_id" ref="model_clinic_patient"/>
+        <field name="domain_force">[('clinic_id', 'in', user.clinic_ids.ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+    -->
+</odoo>

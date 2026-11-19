@@ -1,1 +1,14 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_clinic_patient_reception,clinic.patient.reception,model_clinic_patient,group_clinic_reception,1,1,1,0
+access_clinic_patient_caissier,clinic.patient.caissier,model_clinic_patient,group_clinic_caisse,1,0,0,0
+access_clinic_patient_pharmacie,clinic.patient.pharmacie,model_clinic_patient,group_clinic_pharmacie,1,0,0,0
+access_clinic_patient_infermier,clinic.patient.infermier,model_clinic_patient,group_clinic_infermier,1,1,0,0
+access_clinic_patient_medecin,clinic.patient.medecin,model_clinic_patient,group_clinic_medecin,1,1,1,0
+access_clinic_patient_manager,clinic.patient.manager,model_clinic_patient,group_clinic_manager,1,1,1,0
+access_merge_wizard_manager,merge.wizard.manager,model_clinic_patient_merge_wizard,group_clinic_manager,1,1,1,1
+access_merge_wizard_medecin,merge.wizard.medecin,model_clinic_patient_merge_wizard,group_clinic_medecin,1,1,1,1
+access_duplicate_wizard_all,duplicate.wizard.all,model_clinic_patient_duplicate_wizard,base.group_user,1,1,1,1
+access_consent_reception,consent.reception,model_clinic_patient_consent,group_clinic_reception,1,1,1,0
+access_consent_medecin,consent.medecin,model_clinic_patient_consent,group_clinic_medecin,1,1,1,0
+access_consent_infermier,consent.infermier,model_clinic_patient_consent,group_clinic_infermier,1,1,1,0
+access_consent_manager,consent.manager,model_clinic_patient_consent,group_clinic_manager,1,1,1,0

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_clinic_patient_merge_wizard_form" model="ir.ui.view">
+        <field name="name">clinic.patient.merge.wizard.form</field>
+        <field name="model">clinic.patient.merge.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Fusionner des dossiers patients">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Attention :</strong> Cette action est irréversible.
+                    Le dossier source sera archivé (jamais supprimé) et toutes ses données
+                    seront rattachées au dossier cible. L'opération est tracée dans l'audit trail.
+                </div>
+
+                <group>
+                    <group string="Dossier source (à archiver)">
+                        <field name="source_patient_id"
+                               domain="[('id', '!=', target_patient_id)]"
+                               options="{'no_create': True}"/>
+                    </group>
+                    <group string="Dossier cible (conservé)">
+                        <field name="target_patient_id"
+                               domain="[('id', '!=', source_patient_id), ('active', '=', True)]"
+                               options="{'no_create': True}"/>
+                    </group>
+                </group>
+
+                <group string="Motif de la fusion">
+                    <field name="merge_reason" placeholder="Expliquez pourquoi ces dossiers sont fusionnés..."/>
+                </group>
+
+                <group>
+                    <field name="confirm_merge"/>
+                </group>
+
+                <footer>
+                    <button name="action_merge" type="object"
+                            string="Fusionner" class="btn-danger" data-hotkey="q"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_clinic_patient_merge_wizard" model="ir.actions.act_window">
+        <field name="name">Fusionner des dossiers patients</field>
+        <field name="res_model">clinic.patient.merge.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_source_patient_id': active_id}</field>
+    </record>
+
+</odoo>

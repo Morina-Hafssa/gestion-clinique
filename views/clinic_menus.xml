@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Menu racine -->
+    <menuitem id="menu_clinic_root"
+              name="Clinique"
+              sequence="10"
+              web_icon="gestion_clinique,static/description/icon.png"/>
+
+    <!-- Menu Patients -->
+    <menuitem id="menu_clinic_patients"
+              name="Patients"
+              parent="menu_clinic_root"
+              action="action_clinic_patient"
+              sequence="10"/>
+
+</odoo>
