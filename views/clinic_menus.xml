@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_clinic_root"
+              name="Clinique"
+              sequence="10"
+              web_icon="gestion_clinique,static/description/icon.png"/>
+
+    <menuitem id="menu_clinic_patients"
+              name="Patients"
+              parent="menu_clinic_root"
+              action="action_clinic_patient"
+              sequence="10"/>
+
+    <menuitem id="menu_clinic_appointments"
+              name="Rendez-vous"
+              parent="menu_clinic_root"
+              action="action_clinic_appointment"
+              sequence="20"/>
+
+    <menuitem id="menu_clinic_queue"
+              name="File d'attente"
+              parent="menu_clinic_root"
+              action="action_clinic_appointment_queue"
+              sequence="30"
+              groups="gestion_clinique.group_clinic_reception,gestion_clinique.group_clinic_medecin,gestion_clinique.group_clinic_infermier,gestion_clinique.group_clinic_manager"/>
+
+    <menuitem id="menu_clinic_visits"
+              name="Visites"
+              parent="menu_clinic_root"
+              action="action_clinic_visit"
+              sequence="40"/>
+
+</odoo>

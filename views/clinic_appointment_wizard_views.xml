@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===================== CANCEL WIZARD ===================== -->
+    <record id="view_clinic_appointment_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">clinic.appointment.cancel.wizard.form</field>
+        <field name="model">clinic.appointment.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Annuler le rendez-vous">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Attention :</strong> L'annulation sera enregistrée avec votre nom et l'horodatage (RG-RDV-03).
+                </div>
+                <group>
+                    <field name="appointment_id" readonly="1"/>
+                    <field name="cancel_reason" placeholder="Motif de l'annulation..."/>
+                    <field name="confirm_cancel"/>
+                </group>
+                <footer>
+                    <button name="action_confirm_cancel" type="object"
+                            string="Annuler le RDV" class="btn-danger"/>
+                    <button string="Retour" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===================== RESCHEDULE WIZARD ===================== -->
+    <record id="view_clinic_appointment_reschedule_wizard_form" model="ir.ui.view">
+        <field name="name">clinic.appointment.reschedule.wizard.form</field>
+        <field name="model">clinic.appointment.reschedule.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reprogrammer le rendez-vous">
+                <div class="alert alert-info" role="alert">
+                    Le nouveau créneau sera vérifié <b>avant</b> de libérer l'ancien (RG-RDV-02).
+                </div>
+                <group>
+                    <group string="Rendez-vous actuel">
+                        <field name="appointment_id" readonly="1"/>
+                        <field name="patient_id" readonly="1"/>
+                        <field name="doctor_id" readonly="1"/>
+                        <field name="old_date_start" readonly="1"/>
+                    </group>
+                    <group string="Nouveau créneau">
+                        <field name="new_date_start"/>
+                        <field name="new_date_stop"/>
+                    </group>
+                </group>
+                <group string="Motif">
+                    <field name="reason" placeholder="Motif de la reprogrammation..."/>
+                </group>
+                <footer>
+                    <button name="action_reschedule" type="object"
+                            string="Reprogrammer" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===================== CHECK-IN WIZARD ===================== -->
+    <record id="view_clinic_checkin_wizard_form" model="ir.ui.view">
+        <field name="name">clinic.checkin.wizard.form</field>
+        <field name="model">clinic.checkin.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Check-in du patient">
+                <div class="alert alert-danger" role="alert" invisible="identity_verified">
+                    ⚠ L'identité du patient n'est <b>pas vérifiée</b>. Le check-in sera refusé (RG-ACU-01).
+                </div>
+                <div class="alert alert-success" role="alert" invisible="not identity_verified">
+                    ✓ Identité vérifiée.
+                </div>
+                <div class="alert alert-warning" role="alert" invisible="not is_late">
+                    ⚠ Patient en retard de <field name="late_minutes"/> minutes
+                    (tolérance : <field name="delay_tolerance"/> min).
+                </div>
+
+                <group>
+                    <group string="Rendez-vous">
+                        <field name="appointment_id" readonly="1"/>
+                        <field name="patient_id" readonly="1"/>
+                        <field name="appointment_date" readonly="1"/>
+                        <field name="identity_verified" readonly="1"/>
+                    </group>
+                    <group string="Retard" invisible="not is_late">
+                        <field name="late_minutes" readonly="1"/>
+                        <field name="delay_tolerance" readonly="1"/>
+                        <field name="late_action"/>
+                    </group>
+                </group>
+
+                <group string="Notes">
+                    <field name="notes" nolabel="1" placeholder="Notes d'accueil..."/>
+                </group>
+
+                <footer>
+                    <button name="action_checkin" type="object"
+                            string="Check-in" class="btn-primary"
+                            invisible="not identity_verified"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

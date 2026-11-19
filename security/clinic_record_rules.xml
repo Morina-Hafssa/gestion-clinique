@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===================== RES.PARTNER — reception can create ===================== -->
+    <record id="rule_res_partner_clinic_reception" model="ir.rule">
+        <field name="name">Partners : création autorisée pour la réception</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_clinic_reception'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- ===================== CLINIC.APPOINTMENT ===================== -->
+    <!-- Reception: full access to all appointments -->
+    <record id="rule_appointment_reception" model="ir.rule">
+        <field name="name">RDV : réception accès complet</field>
+        <field name="model_id" ref="model_clinic_appointment"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_clinic_reception'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Medecin: read own + write own (to close consultations) -->
+    <record id="rule_appointment_medecin" model="ir.rule">
+        <field name="name">RDV : médecin voit ses RDV</field>
+        <field name="model_id" ref="model_clinic_appointment"/>
+        <field name="domain_force">[('doctor_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_clinic_medecin'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Infirmier: read all (for queue) -->
+    <record id="rule_appointment_infermier" model="ir.rule">
+        <field name="name">RDV : infirmier lecture seule</field>
+        <field name="model_id" ref="model_clinic_appointment"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_clinic_infermier'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Manager: read all (supervision) -->
+    <record id="rule_appointment_manager" model="ir.rule">
+        <field name="name">RDV : manager lecture seule</field>
+        <field name="model_id" ref="model_clinic_appointment"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_clinic_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- ===================== CLINIC.VISIT ===================== -->
+    <record id="rule_visit_reception" model="ir.rule">
+        <field name="name">Visite : réception accès complet</field>
+        <field name="model_id" ref="model_clinic_visit"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_clinic_reception'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_visit_medecin" model="ir.rule">
+        <field name="name">Visite : médecin accès complet</field>
+        <field name="model_id" ref="model_clinic_visit"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_clinic_medecin'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_visit_infermier" model="ir.rule">
+        <field name="name">Visite : infirmier lecture + écriture</field>
+        <field name="model_id" ref="model_clinic_visit"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_clinic_infermier'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_visit_manager" model="ir.rule">
+        <field name="name">Visite : manager lecture seule</field>
+        <field name="model_id" ref="model_clinic_visit"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_clinic_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+</odoo>

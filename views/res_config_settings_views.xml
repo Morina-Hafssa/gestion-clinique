@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_clinicsys" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.clinicsys</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Clinicsys" name="clinicsys" data-string="Clinicsys">
+                    <block title="Paramètres généraux" name="clinicsys_general">
+                        <setting string="Délai de tolérance de retard"
+                                 help="Minutes après lesquelles un patient est considéré en retard (RG-ACU-03).">
+                            <field name="clinic_delay_tolerance"/>
+                        </setting>
+                        <setting string="Marge entre rendez-vous"
+                                 help="Temps tampon entre deux rendez-vous (RG-RDV-06).">
+                            <field name="clinic_appointment_margin"/>
+                        </setting>
+                        <setting string="Délai de relance des suivis"
+                                 help="Jours avant relance d'une tâche de suivi (RG-SUI-03).">
+                            <field name="clinic_followup_delay"/>
+                        </setting>
+                    </block>
+
+                    <block title="Politique d'accueil" name="clinicsys_late_policy">
+                        <setting string="Action par défaut (patient en retard)"
+                                 help="Comportement proposé par le wizard de check-in (RG-ACU-03).">
+                            <field name="clinic_late_action"/>
+                        </setting>
+                    </block>
+
+                    <block title="Module conditionnel" name="clinicsys_pharmacy">
+                        <setting string="Pharmacie"
+                                 help="Activer uniquement si la clinique exploite une pharmacie interne (RG-PHA-01).">
+                            <field name="clinic_pharmacy_enabled"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
