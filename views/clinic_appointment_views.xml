@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===================== CALENDAR ===================== -->
+    <record id="view_clinic_appointment_calendar" model="ir.ui.view">
+        <field name="name">clinic.appointment.calendar</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <calendar string="Rendez-vous"
+                      date_start="date_start"
+                      date_stop="date_stop"
+                      color="status"
+                      mode="week"
+                      quick_create="false">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="service"/>
+                <field name="status"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ===================== FORM ===================== -->
+    <record id="view_clinic_appointment_form" model="ir.ui.view">
+        <field name="name">clinic.appointment.form</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Rendez-vous">
+                <header>
+                    <button name="action_confirm" type="object"
+                            string="Confirmer" class="btn-primary"
+                            invisible="status not in ('draft', 'booked')"/>
+                    <button name="action_mark_arrived" type="object"
+                            string="Marquer Arrivé" class="btn-primary"
+                            invisible="status not in ('booked', 'confirmed')"/>
+                    <button name="action_start" type="object"
+                            string="Démarrer" class="btn-secondary"
+                            invisible="status != 'arrived'"/>
+                    <button name="action_done" type="object"
+                            string="Terminer" class="btn-success"
+                            invisible="status != 'in_progress'"/>
+                    <button name="action_no_show" type="object"
+                            string="Marquer Absent" class="btn-warning"
+                            invisible="status not in ('booked', 'confirmed')"
+                            confirm="Confirmer que le patient ne s'est pas présenté ?"/>
+                    <button name="action_reschedule" type="object"
+                            string="Reprogrammer" class="btn-secondary"
+                            invisible="status in ('cancelled', 'done', 'no_show', 'rescheduled')"/>
+                    <button name="action_cancel" type="object"
+                            string="Annuler" class="btn-danger"
+                            invisible="status in ('cancelled', 'done', 'no_show', 'rescheduled')"/>
+                    <field name="status" widget="statusbar"
+                           statusbar_visible="draft,booked,confirmed,arrived,in_progress,done"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h3><field name="patient_id" options="{'no_create': True}"/></h3>
+                    </div>
+
+                    <group>
+                        <group string="Planification">
+                            <field name="doctor_id" options="{'no_create': True}"/>
+                            <field name="service"/>
+                            <field name="date_start"/>
+                            <field name="date_stop"/>
+                            <field name="duration" readonly="1"/>
+                            <field name="room"/>
+                        </group>
+                        <group string="Réservation">
+                            <field name="booking_channel"/>
+                            <field name="confirmation_sent" readonly="1"/>
+                            <field name="confirmation_channel" readonly="1"
+                                   invisible="not confirmation_sent"/>
+                            <field name="confirmation_date" readonly="1"
+                                   invisible="not confirmation_sent"/>
+                            <field name="confirmation_user_id" readonly="1"
+                                   invisible="not confirmation_sent"/>
+                        </group>
+                    </group>
+
+                    <group string="Arrivée et visite"
+                           invisible="status in ('draft', 'booked', 'confirmed', 'cancelled', 'no_show', 'rescheduled')">
+                        <field name="arrival_time" readonly="1"/>
+                        <field name="arrival_user_id" readonly="1"/>
+                        <field name="visit_id" readonly="1"/>
+                    </group>
+
+                    <group string="Annulation" invisible="not cancel_date">
+                        <field name="cancel_reason" readonly="1"/>
+                        <field name="cancel_date" readonly="1"/>
+                        <field name="cancel_user_id" readonly="1"/>
+                    </group>
+
+                    <group string="Reprogrammation"
+                           invisible="not reschedule_origin_id and not reschedule_new_id">
+                        <field name="reschedule_origin_id" readonly="1"
+                               invisible="not reschedule_origin_id"/>
+                        <field name="reschedule_new_id" readonly="1"
+                               invisible="not reschedule_new_id"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===================== LIST ===================== -->
+    <record id="view_clinic_appointment_list" model="ir.ui.view">
+        <field name="name">clinic.appointment.list</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <list string="Rendez-vous"
+                  decoration-success="status == 'done'"
+                  decoration-info="status == 'confirmed'"
+                  decoration-warning="status == 'arrived'"
+                  decoration-muted="status in ('cancelled', 'no_show', 'rescheduled')">
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="date_stop"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="service"/>
+                <field name="status" widget="badge"
+                       decoration-success="status == 'done'"
+                       decoration-info="status == 'confirmed'"
+                       decoration-warning="status == 'arrived'"/>
+                <field name="booking_channel" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ===================== KANBAN ===================== -->
+    <record id="view_clinic_appointment_kanban" model="ir.ui.view">
+        <field name="name">clinic.appointment.kanban</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="status" class="o_kanban_small_column">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="date_start"/>
+                <field name="service"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_title">
+                                <strong><field name="name"/></strong>
+                            </div>
+                            <div><field name="patient_id"/></div>
+                            <div><field name="doctor_id"/></div>
+                            <div><field name="date_start"/></div>
+                            <div><field name="service"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ===================== SEARCH ===================== -->
+    <record id="view_clinic_appointment_search" model="ir.ui.view">
+        <field name="name">clinic.appointment.search</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher un rendez-vous">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="date_start"/>
+                <separator/>
+                <filter name="filter_today" string="Aujourd'hui"
+                        domain="[('date_start', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00')), ('date_start', '&lt;=', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                <filter name="filter_my" string="Mes RDV"
+                        domain="[('doctor_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_draft" string="Brouillon" domain="[('status', '=', 'draft')]"/>
+                <filter name="filter_booked" string="Réservé" domain="[('status', '=', 'booked')]"/>
+                <filter name="filter_confirmed" string="Confirmé" domain="[('status', '=', 'confirmed')]"/>
+                <filter name="filter_arrived" string="Arrivé" domain="[('status', '=', 'arrived')]"/>
+                <filter name="filter_done" string="Terminé" domain="[('status', '=', 'done')]"/>
+                <filter name="filter_cancelled" string="Annulé" domain="[('status', '=', 'cancelled')]"/>
+                <separator/>
+                <filter name="filter_pending" string="À traiter"
+                        domain="[('status', 'in', ['booked', 'confirmed'])]"/>
+                <group expand="0" string="Grouper par">
+                    <filter name="group_by_status" string="Statut" context="{'group_by': 'status'}"/>
+                    <filter name="group_by_doctor" string="Médecin" context="{'group_by': 'doctor_id'}"/>
+                    <filter name="group_by_day" string="Jour" context="{'group_by': 'date_start:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ===================== ACTION ===================== -->
+    <record id="action_clinic_appointment" model="ir.actions.act_window">
+        <field name="name">Rendez-vous</field>
+        <field name="res_model">clinic.appointment</field>
+        <field name="view_mode">calendar,list,kanban,form</field>
+        <field name="search_view_id" ref="view_clinic_appointment_search"/>
+        <field name="context">{'search_default_filter_pending': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Planifier un rendez-vous</p>
+            <p>Créez un rendez-vous pour un patient, un médecin, un service, une date et une durée.</p>
+        </field>
+    </record>
+
+</odoo>

@@ -17,7 +17,7 @@
         <field name="name">Réception</field>
         <field name="category_id" ref="module_category_gestion_clinique"/>
         <field name="implied_ids" eval="[(4, ref('base.group_partner_manager'))]"/>
-        <field name="comment">Accès aux patients (identité, contacts), rendez-vous et check-in.</field>
+        <field name="comment">Accès aux patients (identité, contacts), rendez-vous et check-in. Pas d'accès aux données cliniques.</field>
     </record>
 
     <!-- ✅ Nom corrigé : group_clinic_caisse (pas caissier) — §3.2, PV-10 -->

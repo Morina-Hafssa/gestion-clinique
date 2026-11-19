@@ -74,6 +74,10 @@ class ClinicPatientConsent(models.Model):
 
     def action_withdraw(self):
         for record in self:
+            if record.consent_withdrawn:
+                continue  # already withdrawn
+            if not record.consent_given:
+                continue  # was never given
             record.write({
                 'consent_withdrawn': True,
                 'withdrawal_date': fields.Datetime.now(),

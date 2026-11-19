@@ -5,7 +5,7 @@
         <field name="model">clinic.patient.duplicate.wizard</field>
         <field name="arch" type="xml">
             <form string="Recherche anti-doublon">
-                <div class="alert alert-info">
+                <div class="alert alert-info" role="alert">
                     Saisissez les informations connues pour rechercher un patient existant avant création.
                 </div>
                 <group>
